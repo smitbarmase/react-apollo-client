@@ -1,7 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
 
-const WrapperStyled = styled.input`
+const InputStyled = styled.input`
 	background: #30333a;
 	width: 100%;
 	height: 40px;
@@ -16,8 +15,4 @@ const WrapperStyled = styled.input`
 	}
 `;
 
-const Input = ({ type = 'text' }: { type?: string }) => (
-	<WrapperStyled type={type}></WrapperStyled>
-);
-
-export default Input;
+export default InputStyled;
