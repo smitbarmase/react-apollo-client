@@ -1,8 +1,18 @@
 import React from 'react';
-import './App.css';
+import styled from 'styled-components';
+
+import Auth from './pages/Auth';
+
+const WrapperStyled = styled.div`
+	height: 100vh;
+`;
 
 function App() {
-	return <div className='App'></div>;
+	return (
+		<WrapperStyled>
+			<Auth />
+		</WrapperStyled>
+	);
 }
 
 export default App;
