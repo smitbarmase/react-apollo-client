@@ -7,6 +7,10 @@ import SubTitle from '../components/SubTitle';
 
 import InputStyled from '../styled/InputStyled';
 import ButtonStyled from '../styled/ButtonStyled';
+// import {
+// 	CreateAccount,
+// 	CreateAccountVariables,
+// } from './__generated__/CreateAccount';
 
 const WrapperStyled = styled.div`
 	background: #303136;
@@ -29,16 +33,9 @@ const FieldWrapperStyled = styled.div`
 	margin-bottom: 20px;
 `;
 
-// data: {
-// 	name: "Smit Barmase"
-// 	username: "smitbarmase"
-// 	password: "hehehehe"
-// 	email: "smitbarmase@outlook.com"
-// }
-
 const CREATE_ACCOUNT = gql`
-	mutation CreateAccount($data: String!) {
-		createUser(type: $data) {
+	mutation CreateAccount($data: UserInput!) {
+		createUser(data: $data) {
 			name
 			username
 			email
@@ -48,8 +45,6 @@ const CREATE_ACCOUNT = gql`
 `;
 
 const Auth = () => {
-	const [createAccount, { data, loading, error }] = useMutation(CREATE_ACCOUNT);
-
 	// if (loading) return <p>Loading!</p>;
 	// if (error) return <p>ERROR</p>;
 	// if (!data) return <p>Not found</p>;
@@ -57,6 +52,8 @@ const Auth = () => {
 	const [email, setEmail] = React.useState('');
 	const [username, setUsername] = React.useState('');
 	const [password, setPassword] = React.useState('');
+
+	const [createAccount, { data }] = useMutation(CREATE_ACCOUNT);
 
 	return (
 		<WrapperStyled>
@@ -87,7 +84,22 @@ const Auth = () => {
 					/>
 				</FieldWrapperStyled>
 				<FieldWrapperStyled>
-					<ButtonStyled onClick={() => createAccount()}>Continue</ButtonStyled>
+					<ButtonStyled
+						onClick={() => {
+							createAccount({
+								variables: {
+									data: {
+										name: 'Hehehe',
+										email,
+										username,
+										password,
+									},
+								},
+							});
+						}}
+					>
+						Continue
+					</ButtonStyled>
 				</FieldWrapperStyled>
 			</AuthBoxStyled>
 		</WrapperStyled>
