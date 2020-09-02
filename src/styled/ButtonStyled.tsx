@@ -1,7 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
 
-const WrapperStyled = styled.button`
+const ButtonStyled = styled.button`
 	background: #7289da;
 	width: 100%;
 	height: 44px;
@@ -15,8 +14,4 @@ const WrapperStyled = styled.button`
 	cursor: pointer;
 `;
 
-const Button = ({ children }: { children: string }) => (
-	<WrapperStyled>{children}</WrapperStyled>
-);
-
-export default Button;
+export default ButtonStyled;

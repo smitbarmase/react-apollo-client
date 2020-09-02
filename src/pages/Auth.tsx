@@ -1,12 +1,12 @@
-import React, { Props } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { useQuery, gql } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 
 import Title from '../components/Title';
 import SubTitle from '../components/SubTitle';
-import Button from '../components/Button';
 
 import InputStyled from '../styled/InputStyled';
+import ButtonStyled from '../styled/ButtonStyled';
 
 const WrapperStyled = styled.div`
 	background: #303136;
@@ -18,7 +18,6 @@ const WrapperStyled = styled.div`
 
 const AuthBoxStyled = styled.div`
 	width: 480px;
-	/* height: 564px; */
 	padding: 32px;
 	background: #36393f;
 	box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, 0.2);
@@ -30,58 +29,69 @@ const FieldWrapperStyled = styled.div`
 	margin-bottom: 20px;
 `;
 
-// const GET_HELLO = gql`
-// 	query {
-// 		hello
-// 	}
-// `;
+// data: {
+// 	name: "Smit Barmase"
+// 	username: "smitbarmase"
+// 	password: "hehehehe"
+// 	email: "smitbarmase@outlook.com"
+// }
 
-type AuthProps = {};
+const CREATE_ACCOUNT = gql`
+	mutation CreateAccount($data: String!) {
+		createUser(type: $data) {
+			name
+			username
+			email
+			id
+		}
+	}
+`;
 
-type AuthState = {
-	email: string;
-	username: string;
-	password: string;
-};
-
-class Auth extends React.Component<AuthProps, AuthState> {
-	// const { data, loading, error } = useQuery(GET_HELLO);
+const Auth = () => {
+	const [createAccount, { data, loading, error }] = useMutation(CREATE_ACCOUNT);
 
 	// if (loading) return <p>Loading!</p>;
 	// if (error) return <p>ERROR</p>;
 	// if (!data) return <p>Not found</p>;
-	state = {
-		email: '',
-		username: '',
-		password: '',
-	};
 
-	render() {
-		return (
-			<WrapperStyled>
-				<AuthBoxStyled>
-					<FieldWrapperStyled>
-						<Title>Create an account</Title>
-					</FieldWrapperStyled>
-					<FieldWrapperStyled>
-						<SubTitle>Email</SubTitle>
-						<InputStyled value={this.state.email} />
-					</FieldWrapperStyled>
-					<FieldWrapperStyled>
-						<SubTitle>Username</SubTitle>
-						<InputStyled value={this.state.username} />
-					</FieldWrapperStyled>
-					<FieldWrapperStyled>
-						<SubTitle>Password</SubTitle>
-						<InputStyled type='password' value={this.state.password} />
-					</FieldWrapperStyled>
-					<FieldWrapperStyled>
-						<Button>Continue</Button>
-					</FieldWrapperStyled>
-				</AuthBoxStyled>
-			</WrapperStyled>
-		);
-	}
-}
+	const [email, setEmail] = React.useState('');
+	const [username, setUsername] = React.useState('');
+	const [password, setPassword] = React.useState('');
+
+	return (
+		<WrapperStyled>
+			<AuthBoxStyled>
+				<FieldWrapperStyled>
+					<Title>Create an account</Title>
+				</FieldWrapperStyled>
+				<FieldWrapperStyled>
+					<SubTitle>Email</SubTitle>
+					<InputStyled
+						value={email}
+						onChange={(e) => setEmail(e.currentTarget.value)}
+					/>
+				</FieldWrapperStyled>
+				<FieldWrapperStyled>
+					<SubTitle>Username</SubTitle>
+					<InputStyled
+						value={username}
+						onChange={(e) => setUsername(e.currentTarget.value)}
+					/>
+				</FieldWrapperStyled>
+				<FieldWrapperStyled>
+					<SubTitle>Password</SubTitle>
+					<InputStyled
+						type='password'
+						value={password}
+						onChange={(e) => setPassword(e.currentTarget.value)}
+					/>
+				</FieldWrapperStyled>
+				<FieldWrapperStyled>
+					<ButtonStyled onClick={() => createAccount()}>Continue</ButtonStyled>
+				</FieldWrapperStyled>
+			</AuthBoxStyled>
+		</WrapperStyled>
+	);
+};
 
 export default Auth;
