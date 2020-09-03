@@ -3,7 +3,7 @@
 
 ### About The Project
 
-This is a boilerplate project create with
+This is a boilerplate project created with
 [Create React App](https://github.com/facebook/create-react-app) with
 [TypeScript](https://www.typescriptlang.org/) support, to connect frontend and
 [GraphQL](https://graphql.org/) backend using
