@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { gql, useMutation } from '@apollo/client';
 
@@ -7,10 +7,6 @@ import SubTitle from '../components/SubTitle';
 
 import InputStyled from '../styled/InputStyled';
 import ButtonStyled from '../styled/ButtonStyled';
-// import {
-// 	CreateAccount,
-// 	CreateAccountVariables,
-// } from './__generated__/CreateAccount';
 
 const WrapperStyled = styled.div`
 	background: #303136;
@@ -45,21 +41,46 @@ const CREATE_ACCOUNT = gql`
 `;
 
 const Auth = () => {
-	// if (loading) return <p>Loading!</p>;
-	// if (error) return <p>ERROR</p>;
-	// if (!data) return <p>Not found</p>;
+	const [name, setName] = useState('');
+	const [email, setEmail] = useState('');
+	const [username, setUsername] = useState('');
+	const [password, setPassword] = useState('');
 
-	const [email, setEmail] = React.useState('');
-	const [username, setUsername] = React.useState('');
-	const [password, setPassword] = React.useState('');
+	const [createAccount, { data, loading, error }] = useMutation(
+		CREATE_ACCOUNT,
+		{
+			variables: {
+				data: {
+					name,
+					email,
+					username,
+					password,
+				},
+			},
+		}
+	);
 
-	const [createAccount, { data }] = useMutation(CREATE_ACCOUNT);
+	useEffect(() => {
+		if (data) {
+			console.log(data);
+		} else {
+			console.log('Not found');
+			console.log(error);
+		}
+	}, [loading]);
 
 	return (
 		<WrapperStyled>
 			<AuthBoxStyled>
 				<FieldWrapperStyled>
 					<Title>Create an account</Title>
+				</FieldWrapperStyled>
+				<FieldWrapperStyled>
+					<SubTitle>Name</SubTitle>
+					<InputStyled
+						value={name}
+						onChange={(e) => setName(e.currentTarget.value)}
+					/>
 				</FieldWrapperStyled>
 				<FieldWrapperStyled>
 					<SubTitle>Email</SubTitle>
@@ -84,22 +105,7 @@ const Auth = () => {
 					/>
 				</FieldWrapperStyled>
 				<FieldWrapperStyled>
-					<ButtonStyled
-						onClick={() => {
-							createAccount({
-								variables: {
-									data: {
-										name: 'Hehehe',
-										email,
-										username,
-										password,
-									},
-								},
-							});
-						}}
-					>
-						Continue
-					</ButtonStyled>
+					<ButtonStyled onClick={() => createAccount()}>Continue</ButtonStyled>
 				</FieldWrapperStyled>
 			</AuthBoxStyled>
 		</WrapperStyled>
