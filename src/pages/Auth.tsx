@@ -61,13 +61,10 @@ const Auth = () => {
 	);
 
 	useEffect(() => {
-		if (data) {
-			console.log(data);
-		} else {
-			console.log('Not found');
-			console.log(error);
-		}
-	}, [loading]);
+		if (loading) console.log(loading);
+		if (error) console.log(error);
+		if (data) console.log(data);
+	}, [loading, data, error]);
 
 	return (
 		<WrapperStyled>
@@ -76,17 +73,17 @@ const Auth = () => {
 					<Title>Create an account</Title>
 				</FieldWrapperStyled>
 				<FieldWrapperStyled>
-					<SubTitle>Name</SubTitle>
-					<InputStyled
-						value={name}
-						onChange={(e) => setName(e.currentTarget.value)}
-					/>
-				</FieldWrapperStyled>
-				<FieldWrapperStyled>
 					<SubTitle>Email</SubTitle>
 					<InputStyled
 						value={email}
 						onChange={(e) => setEmail(e.currentTarget.value)}
+					/>
+				</FieldWrapperStyled>
+				<FieldWrapperStyled>
+					<SubTitle>Name</SubTitle>
+					<InputStyled
+						value={name}
+						onChange={(e) => setName(e.currentTarget.value)}
 					/>
 				</FieldWrapperStyled>
 				<FieldWrapperStyled>
